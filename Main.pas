@@ -8,7 +8,7 @@ uses
   Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     Panel1: TPanel;
     Panel2: TPanel;
     StatusBar1: TStatusBar;
@@ -43,7 +43,7 @@ type
   end;
 
 var
-  Form1   : TForm1;
+  MainForm   : TMainForm;
   HostName: String;
 
 implementation
@@ -51,18 +51,18 @@ implementation
 {$R *.dfm}
 
 
-procedure TForm1.DBGrid1KeyUp(Sender: TObject; var Key: Word;
+procedure TMainForm.DBGrid1KeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = 46 then KillRemoteProcess;
 end;
 
-procedure TForm1.ExitBtnClick(Sender: TObject);
+procedure TMainForm.ExitBtnClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TForm1.FormattingGrid;
+procedure TMainForm.FormattingGrid;
 begin
   DBGrid1.Columns[0].Width            := 200;
   DBGrid1.Columns[0].Title.Alignment  := taCenter;
@@ -79,18 +79,18 @@ begin
   DBGrid1.Columns[4].Alignment        := taRightJustify;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
   CSVConn.ConnectionString := 'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=' + ExtractFilePath(Application.ExeName) +
                               ';Persist Security Info=False;Extended Properties="text;HDR=YES;FMT=Delimited"';
 end;
 
-procedure TForm1.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TMainForm.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = 116 then GetRemoteProcesses;
 end;
 
-procedure TForm1.GetRemoteProcesses;
+procedure TMainForm.GetRemoteProcesses;
 var
   Command: string;
 begin
@@ -110,22 +110,22 @@ begin
   StatusBar1.Panels[0].Text := 'Активных процессов: ' + IntToStr(Query.RecordCount);
 end;
 
-procedure TForm1.HostKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TMainForm.HostKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = 13 then GetRemoteProcesses;
 end;
 
-procedure TForm1.GetBtnClick(Sender: TObject);
+procedure TMainForm.GetBtnClick(Sender: TObject);
 begin
   GetRemoteProcesses;
 end;
 
-procedure TForm1.KillBtnClick(Sender: TObject);
+procedure TMainForm.KillBtnClick(Sender: TObject);
 begin
   KillRemoteProcess;
 end;
 
-procedure TForm1.KillRemoteProcess;
+procedure TMainForm.KillRemoteProcess;
 var
   PID: String;
   Command: String;
@@ -145,12 +145,12 @@ begin
   end;
 end;
 
-procedure TForm1.KillThis1Click(Sender: TObject);
+procedure TMainForm.KillThis1Click(Sender: TObject);
 begin
   KillRemoteProcess;
 end;
 
-procedure TForm1.ShellExecuteAndWait(FileName, param: String);
+procedure TMainForm.ShellExecuteAndWait(FileName, param: String);
 var
   exInfo: TShellExecuteInfo;
   Ph: DWORD;
@@ -174,12 +174,12 @@ begin
     Exit;
   while WaitForSingleObject(ExInfo.hProcess, 50) <> WAIT_OBJECT_0 do
   begin
-    Form1.Enabled := false;
-    Form1.Cursor  := crHourGlass;
+    MainForm.Enabled := false;
+    MainForm.Cursor  := crHourGlass;
   end;
   CloseHandle(Ph);
-  Form1.Cursor  := crDefault;
-  Form1.Enabled := true;
+  MainForm.Cursor  := crDefault;
+  MainForm.Enabled := true;
 end;
 
 end.
