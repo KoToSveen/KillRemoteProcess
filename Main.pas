@@ -94,6 +94,7 @@ procedure TForm1.GetRemoteProcesses;
 var
   Command: string;
 begin
+  if Host.Text = '' then Host.Text := '127.0.0.1';
   try
     HostName := Host.Text;
     Command := '/c @echo off && chcp 1251 && tasklist /fo csv /s ' + HostName + ' > RemoteHostProcesses.txt && @echo on';
