@@ -1,7 +1,7 @@
 object MainForm: TMainForm
   Left = 360
   Top = 135
-  Caption = 'Kill Remote Process'
+  Caption = 'Kill Remote Process v.1.0.0.1'
   ClientHeight = 670
   ClientWidth = 514
   Color = clBtnFace

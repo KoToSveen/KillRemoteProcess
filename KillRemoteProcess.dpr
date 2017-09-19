@@ -9,6 +9,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.Title := 'Kill Remote Process';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
