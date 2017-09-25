@@ -1,4 +1,4 @@
-# KillRemoteProcess
+# Kill Remote Process
 Kill process on remote computer (Win).
 
 This tool using 'tasklist.exe' for get remote task list and 'taskkill.exe' to kill process on remote computer.
